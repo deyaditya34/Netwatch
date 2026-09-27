@@ -3,10 +3,15 @@ import { encodeMessage, decodeMessage, parseMessages, createErrorResponse } from
 import { cliParser } from "../cli/cliParser.js";
 import { validateCLIRequest } from "../cli/validateCliRequest.js";
 import { formatResponse } from "../cli/responseFormatter.js";
+import { CLI_HOST, CLI_PORT } from "../config/env.js";
 
-const SOCKET_PATH = "test.sock";
+const HOST = CLI_HOST;
+const PORT = CLI_PORT;
 
-const client = net.createConnection(SOCKET_PATH, () => {
+const client = net.createConnection({
+	host: HOST,
+	port: PORT
+}, () => {
 });
 
 let input = process.argv.slice(2).join(" ");

@@ -5,14 +5,10 @@ import {
 	createErrorResponse, parseMessages, validateServerRequest
 } from "./protocol.js";
 import { handleRequest } from "../commands/handler.js";
+import { CLI_HOST, CLI_PORT } from "../config/env.js";
 
-const SOCKET_PATH = "test.sock";
-
-try {
-	fs.unlinkSync(SOCKET_PATH);
-} catch (err) {
-	console.log("err in index.js -", err.message);
-}
+const HOST = CLI_HOST;
+const PORT = CLI_PORT;
 
 export const server = net.createServer((socket) => {
 	console.log("client connected");
@@ -86,7 +82,7 @@ server.on("error", (err) => {
 	console.error("Server error -", err.message);
 });
 
-server.listen(SOCKET_PATH, () => {
-	console.log("server is listening on ", SOCKET_PATH);
+server.listen(PORT, HOST,  () => {
+	console.log(`server is listening on ${HOST}:${PORT}`);
 });
 
