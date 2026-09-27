@@ -1,102 +1,126 @@
 # net_limiter
 
-net_limiter is a lightweight Linux network monitor written in Node.js. It reads raw byte counters from `/sys/class/net/*/statistics`, tracks per-interface and aggregate usage, and emits desktop notifications when daily usage crosses a configured MB threshold.
+net_limiter is a lightweight Linux network monitor and CLI reporting tool built in Node.js. It polls interface byte counters from `/sys/class/net`, tracks cumulative and daily usage, exposes a local TCP command server, and can show live speed, session totals, and limit information from the command line.
 
 ## Features
 
-- Tracks total, daily, and per-interface download/upload bytes
-- Filters to active Ethernet and Wi‑Fi interfaces only
-- Calculates live speeds from byte deltas over time
-- Saves persistent state to `state.json` so usage and notification checkpoints survive process restarts
-- Appends daily summaries to `usage.jsonl` for later reporting
-- Sends `notify-send` alerts when the configured usage threshold is reached
+- Tracks per-interface and total download/upload usage
+- Monitors live network speed using byte deltas over time
+- Saves persisted state and usage history to files in a configured data directory
+- Exposes a socket-based CLI server for commands such as `usage`, `speed`, `session`, `status`, `limit`, and `notification`
+- Sends desktop notifications with `notify-send` when usage crosses a configured threshold
+- Supports limit tracking for a date range or rolling number of days
 
 ## Requirements
 
 - Linux with `/sys/class/net` available
 - Node.js 16 or newer
-- `notify-send` installed and available in `PATH` for desktop notifications
+- `notify-send` installed for desktop notifications
 
 ## Installation
 
 ```bash
-git clone https://github.com/<your-org>/net_limiter.git
-cd net_limiter
 npm install
 ```
 
-Create a `.env` file in the project root:
+Update the `.env` file in the project root:
 
 ```env
-NOTIFY_MB=10
 DATA_DIR=data
+CLI_HOST=127.0.0.1
+CLI_PORT=4000
 ```
 
-The runtime expects these variables to exist before startup; the app loads them from `src/config/env.js` using `dotenv`.
+The application reads these values from `src/config/env.js` using `dotenv`, and it will fail at startup if any required variable is missing.
 
-## Running
+## Running the monitor
 
-Start the monitor directly:
+Start the monitoring service:
 
 ```bash
-node src/index.js
+npm start
 ```
 
-This process runs continuously and polls the interface counters every second. It stores the current state and usage history under the configured `DATA_DIR` directory.
+This starts the monitoring loop and the CLI server. The monitor continues running in the foreground and saves its state under the configured `DATA_DIR`.
+
+## CLI usage
+
+Run commands through the client entry point:
+
+```bash
+node src/socket/client.js "status"
+node src/socket/client.js "usage --days 7"
+node src/socket/client.js "usage --from 2026-09-01 --to 2026-09-15"
+node src/socket/client.js "speed"
+node src/socket/client.js "speed --watch"
+node src/socket/client.js "session"
+node src/socket/client.js "limit get"
+node src/socket/client.js "limit set --amount 10 --days 30"
+node src/socket/client.js "notification enable"
+node src/socket/client.js "notification disable"
+node src/socket/client.js "notification --threshold 2"
+node src/socket/client.js "help"
+```
+
+### Supported commands
+
+- `help`
+- `usage --days <number>`
+- `usage --from <date> --to <date>`
+- `interface --days <number>`
+- `interface --from <date> --to <date>`
+- `speed`
+- `speed --watch`
+- `session`
+- `status`
+- `limit get`
+- `limit set --amount <GB> --days <number>`
+- `limit set --amount <GB> --from <date> --to <date>`
+- `notification enable`
+- `notification disable`
+- `notification --threshold <GB>`
+
+## Data and state files
+
+The project creates and updates files under `DATA_DIR`:
+
+- `state.json` — persisted monitor state, including totals, current daily usage, and notification state
+- `usage.jsonl` — daily usage snapshots appended as JSON lines
+- `state.json.tmp` — temporary file used while saving state atomically
 
 ## How it works
 
-- `src/index.js` starts the monitoring loop and loads existing state on startup
-- `src/network/interfaces.js` enumerates interfaces and stores the last observed RX/TX counters
-- `src/network/counters.js` reads byte totals from `/sys/class/net/<iface>/statistics/{rx_bytes,tx_bytes}`
-- `src/network/usage.js` calculates deltas, updates accumulated daily totals, and tracks per-interface usage
-- `src/monitoring/notification.js` sends a notification whenever `STATE.daily.download + STATE.daily.upload` exceeds the next threshold in MB
-- `src/storage/state.js` writes the current monitor state to `state.json`
-- `src/storage/usageHistory.js` appends JSON lines to `usage.jsonl` whenever a day boundary is reached
+- `src/index.js` starts the monitor and loads persisted state
+- `src/network/interfaces.js` enumerates active network interfaces
+- `src/network/counters.js` reads `rx_bytes` and `tx_bytes` from `/sys/class/net/<iface>/statistics`
+- `src/network/usage.js` calculates byte deltas and updates accumulated/daily totals
+- `src/network/speed.js` calculates current download/upload speed
+- `src/storage/state.js` saves state to disk
+- `src/storage/usageHistory.js` stores historical usage totals for reporting
+- `src/monitoring/monitor.js` runs the polling loop every second
+- `src/socket/server.js` accepts CLI requests through a local TCP server
+- `src/socket/client.js` send requests and renders the response
 
-## State and output files
+## Notification behavior
 
-The project writes these files under `DATA_DIR`:
+The monitor checks the current daily usage against a notification threshold. If notifications are enabled and the threshold is reached, it calls `notify-send` with a usage message. The threshold can be set with:
 
-- `state.json` — persisted monitor state including totals, daily usage, and the last notification threshold
-- `usage.jsonl` — daily usage snapshots, one JSON object per line
-- `state.json.tmp` — temporary file used while saving state atomically
-
-Example `state.json` shape:
-
-```json
-{
-  "accumulated": 0,
-  "totalDownload": 0,
-  "totalUpload": 0,
-  "daily": {
-    "download": 0,
-    "upload": 0,
-    "interfaces": {},
-    "lastNotifiedMb": 10
-  },
-  "trackingDate": "2026-09-15"
-}
+```bash
+node src/socket/client.js "notification --threshold 2"
 ```
 
-## Configuration
-
-The live threshold is controlled by `NOTIFY_MB` in `.env`:
-
-- `NOTIFY_MB` sets the usage step in MB for desktop notifications
-- Each time the daily total exceeds the next notification threshold, the app sends a message and increments the next checkpoint
-
-`DATA_DIR` is required and determines where the runtime creates and reads its state and usage files. Relative paths are resolved from the directory where the command is started.
+If no notification daemon exists in your desktop environment, the monitor can still run, but the notification command will fail when `notify-send` is unavailable.
 
 ## Troubleshooting
 
-- If notifications do not appear, verify `notify-send` is installed and a notification daemon is active in your desktop session
-- If no interfaces are tracked, confirm you are running on Linux and that `/sys/class/net` contains Ethernet or Wi‑Fi entries
-- If the app stops updating, check the terminal logs for errors; the monitor catches and logs runtime failures and then re-initializes interfaces
+- If no interfaces are detected, verify that your machine has active Ethernet or Wi‑Fi interfaces under `/sys/class/net`
+- If notifications do not appear, confirm `notify-send` is installed and available in `PATH`
+- If the app stops updating, check terminal output for runtime errors; the monitor reinitializes interfaces after failures
+- If the CLI reports an invalid request, verify the command matches the supported syntax exactly
 
 ## Notes
 
-This project is intentionally minimal and is tuned for local monitoring on a Linux workstation. It is not a full daemon service manager or a cross-platform network tool.
+This project is intended for local monitoring on Linux workstations and is designed around direct access to the system network counters. It is not a general-purpose cross-platform traffic shaper or a full daemon manager.
 
 ## License
 
