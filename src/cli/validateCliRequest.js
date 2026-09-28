@@ -69,11 +69,11 @@ function validateLimitRequest(subCommand, options) {
 		}
 
 		if (!hasDays && !hasDateRange) {
-			throw new Error("Usage requires either 'days' or both 'from' and 'to'");
+			throw new Error("'set' command requires either 'days' or both 'from' and 'to'");
 		}
 
 		if (hasDays && hasDateRange) {
-			throw new Error("Usage cannot use 'days' together with 'from' and 'to'");
+			throw new Error("'set' command cannot use 'days' together with 'from' and 'to'");
 		}
 
 		if (hasDays) {

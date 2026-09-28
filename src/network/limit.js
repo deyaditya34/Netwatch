@@ -26,5 +26,9 @@ export function setLimit(startDate, endDate, limit) {
 	STATE.limitEndDate = endDate;
 	STATE.limit = limit * ONE_GB;
 
-	return `Limit set for '${limit} GB' from '${startDate}' to '${endDate}'`;
+	return {
+		limit,
+		startDate: STATE.limitStartDate,
+		endDate: STATE.limitEndDate
+	}
 }

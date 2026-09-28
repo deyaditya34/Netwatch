@@ -3,7 +3,6 @@ import { calculateDatesFromNoOfDays } from "../utils/date.js";
 
 export async function limitHandler(subCommand, options) {
 	if (subCommand === "set") {
-		options = request.options;
 
 		if (options.days !== undefined) {
 			const { sanitizedStartDate, sanitizedEndDate } = calculateDatesFromNoOfDays(options.days, 1);

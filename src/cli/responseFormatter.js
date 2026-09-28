@@ -102,22 +102,13 @@ function formatSpeed(data) {
 }
 
 function formatLimit(data) {
-	if (typeof data === "string") {
-		return data;
-	}
-
-	const table = new Table({
-		head: ["Metric", "Value"],
+	const table = new Table({ 
+		head: ["Metric", "Value"], 
 	});
 
-	table.push(
-		["Start Date", data.startDate],
-		["End Date", data.endDate],
-		["Limit", data.limit],
-		["Used", data.usedGb],
-		["Remaining", data.remaining],
-		["Usage", data.percentage],
-	);
+	for (const [key, value] of Object.entries(data)) {
+		table.push([key, value]);
+	}
 
 	return table.toString();
 }

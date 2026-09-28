@@ -1,5 +1,4 @@
 import net from "net";
-import fs from "fs";
 import {
 	encodeMessage, decodeMessage, createSuccessResponse,
 	createErrorResponse, parseMessages, validateServerRequest
@@ -49,7 +48,6 @@ export const server = net.createServer((socket) => {
 				else {
 					const data = await handleRequest(request);
 					const successResponse = createSuccessResponse(data);
-
 					socket.write(encodeMessage(successResponse));
 					socket.end();
 				}
