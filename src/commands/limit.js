@@ -6,9 +6,9 @@ export async function limitHandler(subCommand, options) {
 
 		if (options.days !== undefined) {
 			const { sanitizedStartDate, sanitizedEndDate } = calculateDatesFromNoOfDays(options.days, 1);
-			return await setLimit(sanitizedStartDate, sanitizedEndDate, options.amount);
+			return setLimit(sanitizedStartDate, sanitizedEndDate, options.amount);
 		} else {
-			return await setLimit(options.from, options.to, options.amount);
+			return setLimit(options.from, options.to, options.amount);
 		}
 	}
 

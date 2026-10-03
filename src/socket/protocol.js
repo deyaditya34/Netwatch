@@ -61,7 +61,7 @@ export function validateServerRequest(request) {
 		throw new Error("invalid options");
 	}
 
-	if (request.subCommand !== undefined && typeof request.subCommand !== "string") {
+	if (request.subCommand && request.subCommand !== undefined && typeof request.subCommand !== "string") {
 		throw new Error("invalid subCommand");
 	}
 }

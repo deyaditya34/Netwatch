@@ -20,7 +20,7 @@ export function cliParser(input = "") {
 	let subCommand;
 	let optionTokens;
 
-	if (commandWithSubCommands.includes(command)) {
+	if (commandWithSubCommands.includes(command) && !remaining[0]?.startsWith("--")) {
 		subCommand = remaining[0];
 		optionTokens = remaining.slice(1);
 	} else {
@@ -28,7 +28,6 @@ export function cliParser(input = "") {
 	}
 
 	let options = {};
-
 	for (let i = 0; i < optionTokens.length; i += 2) {
 		let key = optionTokens[i].slice(2);
 		let value = optionTokens[i + 1];

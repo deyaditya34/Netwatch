@@ -14,6 +14,8 @@ function getEnv(name) {
 export const DATA_DIR = getEnv("DATA_DIR");
 export const CLI_PORT = getEnv("CLI_PORT");
 export const CLI_HOST = getEnv("CLI_HOST");
+export const W_SOC_HOST = getEnv("W_SOC_HOST");
+export const W_SOC_PORT = getEnv("W_SOC_PORT");
 export const HTTP_PORT = getEnv("HTTP_PORT");
 export const HTTP_HOST = getEnv("HTTP_HOST");
 export const MONITOR_INTERVAL_MS = 1000;

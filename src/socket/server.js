@@ -9,7 +9,7 @@ import { CLI_HOST, CLI_PORT } from "../config/env.js";
 const HOST = CLI_HOST;
 const PORT = CLI_PORT;
 
-export const server = net.createServer((socket) => {
+export const socketServer = net.createServer((socket) => {
 	console.log("client connected");
 
 	let watchInterval = null;
@@ -76,11 +76,11 @@ export const server = net.createServer((socket) => {
 	});
 });
 
-server.on("error", (err) => {
+socketServer.on("error", (err) => {
 	console.error("Server error -", err.message);
 });
 
-server.listen(PORT, HOST,  () => {
+socketServer.listen(PORT, HOST, () => {
 	console.log(`server is listening on ${HOST}:${PORT}`);
 });
 

@@ -16,11 +16,8 @@ export function notificationHandler(subCommand, options, STATE) {
 		STATE.notification.threshold = options.threshold * ONE_GB;
 	}
 
-	console.log("sub command -", subCommand);
-	console.log("options -", options);
-	console.log("STATE -", STATE);
 	result.enabled = STATE.notification.enabled;
 	result.threshold = `'${STATE.notification.threshold / ONE_GB}GB'`;
-	console.log("result -", result);
+	
 	return result;
 }
