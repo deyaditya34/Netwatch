@@ -170,7 +170,7 @@ If your system does not have a notification daemon available, the app can still 
 
 - If no interfaces are reported, confirm that the machine has active Ethernet or Wi‑Fi adapters under `/sys/class/net`.
 - If a command is rejected, double-check the command syntax and option names.
-- If the browser dashboard does not load, confirm that the HTTP server is running on `:3000` and the WebSocket server is running on `:3001`.
+- If the browser dashboard does not load, confirm that the HTTP server is running on `:3002` and the WebSocket server is running on `:3001`.
 - If notifications do not appear, ensure `notify-send` is available in `PATH`.
 - If the monitor stops updating, inspect the console output for runtime errors or interface initialization issues.
 
