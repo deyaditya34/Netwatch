@@ -1,6 +1,6 @@
-# net_limiter
+# Netwatch
 
-net_limiter is a Linux-focused network usage monitor built in Node.js. It reads interface counters from `/sys/class/net`, tracks total and daily traffic, shows live speeds, supports usage limits, and exposes both a command-line interface and a browser dashboard.
+Netwatch is a Linux-focused network usage monitor built in Node.js. It reads interface counters from `/sys/class/net`, tracks total and daily traffic, shows live speeds, supports usage limits, and exposes both a command-line interface and a browser dashboard.
 
 ## Overview
 
