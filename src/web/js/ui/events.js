@@ -7,13 +7,14 @@ import {
     createInterfaceDaysRequest,
     createLimitGetRequest,
     createLimitSetDaysRequest,
-    createNotificationRequest,
     createUsageDateRequest,
     createUsageDaysRequest,
     createSpeedRequest,
     createLimitSetDateRequest,
     createSessionRequest,
-    createStatusRequest
+    createStatusRequest,
+    createNotificationToggleRequest,
+    createNotificationThresholdRequest
 } from "../commands/requests.js";
 
 export function registerEvents() {
@@ -22,34 +23,42 @@ export function registerEvents() {
 
         setCurrentRequest(request);
 
-        handleCommand(request.command, request.options);
+        handleCommand();
     });
 
-    elements.usageDaysButton.addEventListener("click", () => {
+    elements.usageDaysForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
         const request = createUsageDaysRequest(elements.usageDays.value);
 
         setCurrentRequest(request);
 
-        handleCommand(request.command, request.options);
+        handleCommand();
     });
 
-    elements.usageDateButton.addEventListener("click", () => {
+    elements.usageDateForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
         const request = createUsageDateRequest(elements.usageFrom.value, elements.usageTo.value);
 
         setCurrentRequest(request);
 
-        handleCommand(request.command, request.options);
+        handleCommand();
     });
 
-    elements.interfaceDaysButton.addEventListener("click", () => {
+    elements.interfaceDaysForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
         const request = createInterfaceDaysRequest(elements.interfaceDays.value);
 
         setCurrentRequest(request);
 
-        handleCommand(request.command, request.options);
+        handleCommand();
     });
 
-    elements.interfaceDateButton.addEventListener("click", () => {
+    elements.interfaceDateForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
         const request = createInterfaceDateRequest(
             elements.interfaceFrom.value,
             elements.interfaceTo.value
@@ -57,7 +66,7 @@ export function registerEvents() {
 
         setCurrentRequest(request);
 
-        handleCommand(request.command, request.options);
+        handleCommand();
     });
 
     elements.speedButton.addEventListener("click", () => {
@@ -65,7 +74,7 @@ export function registerEvents() {
 
         setCurrentRequest(request);
 
-        handleCommand(request.command, request.options);
+        handleCommand();
     });
 
     elements.speedWatchButton.addEventListener("click", () => {
@@ -73,7 +82,7 @@ export function registerEvents() {
 
         setCurrentRequest(request);
 
-        handleCommand(request.command, request.options);
+        handleCommand();
     });
 
     elements.speedStopButton.addEventListener("click", () => {
@@ -85,33 +94,31 @@ export function registerEvents() {
 
         setCurrentRequest(request);
 
-        handleCommand(request.command, request.options);
+        handleCommand();
     });
 
-    elements.notificationEnableButton.addEventListener("click", () => {
-        const request = createNotificationRequest({}, "enable");
+    elements.notificationToggleButton.addEventListener("click", () => {
+        const enabled = elements.notificationToggleButton.value === "enable";
+
+        const subCommand = enabled ? "disable" : "enable";
+
+        const request = createNotificationToggleRequest(subCommand);
 
         setCurrentRequest(request);
 
-        handleCommand(request.command, request.options, request.subCommand);
+        handleCommand();
     });
 
-    elements.notificationDisableButton.addEventListener("click", () => {
-        const request = createNotificationRequest({}, "disable");
+    elements.notificationThresholdForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const request = createNotificationThresholdRequest(
+            Number(elements.notificationThreshold.value)
+        );
 
         setCurrentRequest(request);
 
-        handleCommand(request.command, request.options, request.subCommand);
-    });
-
-    elements.notificationThresholdButton.addEventListener("click", () => {
-        const request = createNotificationRequest({
-            threshold: Number(elements.notificationThreshold.value)
-        });
-
-        setCurrentRequest(request);
-
-        handleCommand(request.command, request.options);
+        handleCommand();
     });
 
     elements.limitGetButton.addEventListener("click", () => {
@@ -119,10 +126,12 @@ export function registerEvents() {
 
         setCurrentRequest(request);
 
-        handleCommand(request.command, request.options, request.subCommand);
+        handleCommand();
     });
 
-    elements.limitDaysButton.addEventListener("click", () => {
+    elements.limitDaysForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
         const request = createLimitSetDaysRequest(
             elements.limitDays.value,
             elements.limitDaysAmount.value
@@ -130,10 +139,12 @@ export function registerEvents() {
 
         setCurrentRequest(request);
 
-        handleCommand(request.command, request.options, request.subCommand);
+        handleCommand();
     });
 
-    elements.limitDateButton.addEventListener("click", () => {
+    elements.limitDateForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
         const request = createLimitSetDateRequest(
             elements.limitFrom.value,
             elements.limitTo.value,
@@ -142,6 +153,7 @@ export function registerEvents() {
 
         setCurrentRequest(request);
 
-        handleCommand(request.command, request.options, request.subCommand);
+        handleCommand();
     });
+
 }

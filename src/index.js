@@ -1,4 +1,3 @@
-import { readdir, access, mkdir, writeFile } from "fs/promises";
 import { startMonitoring } from "./monitoring/monitor.js";
 import { loadState } from "./storage/state.js";
 import { initialize } from "./network/interfaces.js";

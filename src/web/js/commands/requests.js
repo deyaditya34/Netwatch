@@ -1,4 +1,5 @@
 export function createRequest(command, options = {}, subCommand = undefined) {
+   
     const request = {
         command,
         options
@@ -7,7 +8,7 @@ export function createRequest(command, options = {}, subCommand = undefined) {
     if (subCommand !== undefined) {
         request.subCommand = subCommand;
     };
-
+    
     return request;
 }
 
@@ -64,8 +65,13 @@ export function createInterfaceDateRequest(from, to) {
     );
 }
 
-export function createNotificationRequest(options = {}, subCommand = undefined) {
-    return createRequest("notification", options, subCommand);
+export function createNotificationToggleRequest(subCommand = undefined) {
+    return createRequest("notification", {}, subCommand);
+}
+
+export function createNotificationThresholdRequest(threshold) {
+    
+    return createRequest("notification", { threshold });
 }
 
 export function createLimitGetRequest() {

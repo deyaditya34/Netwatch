@@ -9,15 +9,11 @@ import { statusHandler } from "./status.js";
 import { notificationHandler } from "./notification.js";
 
 export async function handleRequest(request) {
-	let options;
-	let usage;
-	let subCommand;
 	let result;
 
 	switch (request.command) {
 		case "usage":
 			result = await usageHandler(request.options);
-			console.log("result -", result);
 			return result;
 
 		case "interface":

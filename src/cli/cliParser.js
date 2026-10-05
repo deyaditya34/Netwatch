@@ -8,7 +8,7 @@ export function cliParser(input = "") {
 	if (command === "speed") {
 		if (remaining[0] === "--watch") {
 			return {
-				command,												// have to modify the parsing logic later for integrating "--watch" in the defind categories 
+				command,
 				options: {
 					watch: true
 				}

@@ -1,7 +1,14 @@
 export const elements = {
     // Status
     statusButton: document.getElementById("statusButton"),
-    statusOutput: document.getElementById("statusOutput"),
+    todayDate: document.getElementById("todayDate"),
+    todayDownload: document.getElementById("todayDownload"),
+    todayUpload: document.getElementById("todayUpload"),
+    todayTotal: document.getElementById("todayTotal"),
+    statusSessionDownload: document.getElementById("statusSessionDownload"),
+    statusSessionUpload: document.getElementById("statusSessionUpload"),
+    statusNotificationThreshold: document.getElementById("statusNotificationThreshold"),
+    statusNotificationEnabled: document.getElementById("statusNotificationEnabled"),
 
     // Usage
     usageDays: document.getElementById("usageDays"),
@@ -9,32 +16,55 @@ export const elements = {
     usageTo: document.getElementById("usageTo"),
     usageDaysButton: document.getElementById("usageDaysButton"),
     usageDateButton: document.getElementById("usageDateButton"),
-    usageOutput: document.getElementById("usageOutput"),
+    usageTotalDownload: document.getElementById("usageTotalDownload"),
+    usageTotalUpload: document.getElementById("usageTotalUpload"),
+    usagetotal: document.getElementById("usageTotal"),
+    wifiDownload: document.getElementById("wifiDownload"),
+    wifiUpload: document.getElementById("wifiUpload"),
+    wifiUsage: document.getElementById("wifiUsage"),
+    ethernetDownload: document.getElementById("ethernetDownload"),
+    ethernetUpload: document.getElementById("ethernetUpload"),
+    ethernetUsage: document.getElementById("ethernetUsage"),
+    usageDaysForm: document.getElementById("usageDaysForm"),
+    usageDateForm: document.getElementById("usageDateForm"),
 
     // Interface
     interfaceDays: document.getElementById("interfaceDays"),
     interfaceFrom: document.getElementById("interfaceFrom"),
     interfaceTo: document.getElementById("interfaceTo"),
-    interfaceOutput: document.getElementById("interfaceOutput"),
     interfaceDaysButton: document.getElementById("interfaceDaysButton"),
     interfaceDateButton: document.getElementById("interfaceDateButton"),
+    interfaceWifiDownload: document.getElementById("interfaceWifiDownload"),
+    interfaceWifiUpload: document.getElementById("interfaceWifiUpload"),
+    interfaceWifiUsage: document.getElementById("interfaceWifiUsage"),
+    interfaceEthernetDownload: document.getElementById("interfaceEthernetDownload"),
+    interfaceEthernetUpload: document.getElementById("interfaceEthernetUpload"),
+    interfaceEthernetUsage: document.getElementById("interfaceEthernetUsage"),
+    interfaceDaysForm: document.getElementById("interfaceDaysForm"),
+    interfaceDateForm: document.getElementById("interfaceDateForm"),
 
     // Speed
     speedButton: document.getElementById("speedButton"),
-    speedOutput: document.getElementById("speedOutput"),
     speedWatchButton: document.getElementById("speedWatchButton"),
     speedStopButton: document.getElementById("speedStopButton"),
+    speedWifiInterface: document.getElementById("speedWifiInterface"),
+    speedWifiDownload: document.getElementById("speedWifiDownload"),
+    speedWifiUpload: document.getElementById("speedWifiUpload"),
+    speedEthernetInterface: document.getElementById("speedEthernetInterface"),
+    speedEthernetDownload: document.getElementById("speedEthernetDownload"),
+    speedEthernetUpload: document.getElementById("speedEthernetUpload"),
 
     // Session
     sessionButton: document.getElementById("sessionButton"),
-    sessionOutput: document.getElementById("sessionOutput"),
+    sessionStartDate: document.getElementById("sessionStartDate"),
+    sessionDownload: document.getElementById("sessionDownload"),
+    sessionUpload: document.getElementById("sessionUpload"),
 
     // Notification
-    notificationEnableButton: document.getElementById("notificationEnableButton"),
-    notificationDisableButton: document.getElementById("notificationDisableButton"),
-    notificationOutput: document.getElementById("notificationOutput"),
+    notificationToggleButton: document.getElementById("notificationToggleButton"),
     notificationThreshold: document.getElementById("notificationThreshold"),
     notificationThresholdButton: document.getElementById("notificationThresholdButton"),
+    notificationThresholdForm: document.getElementById("notificationThresholdForm"),
 
     // Limit
     limitGetButton: document.getElementById("limitGetButton"),
@@ -43,7 +73,14 @@ export const elements = {
     limitDaysButton: document.getElementById("limitDaysButton"),
     limitFrom: document.getElementById("limitFrom"),
     limitTo: document.getElementById("limitTo"),
-    limitDateAmount: document.getElementById("limitDateAmount"), 
+    limitDateAmount: document.getElementById("limitDateAmount"),
     limitDateButton: document.getElementById("limitDateButton"),
-    limitOutput: document.getElementById("limitOutput")
+    limitStartDate: document.getElementById("limitStartDate"),
+    limitEndDate: document.getElementById("limitEndDate"),
+    limitAmount: document.getElementById("limitAmount"),
+    limitUsed: document.getElementById("limitUsed"),
+    limitRemaining: document.getElementById("limitRemaining"),
+    limitPercentage: document.getElementById("limitPercentage"),
+    limitDaysForm: document.getElementById("limitDaysForm"),
+    limitDateForm: document.getElementById("limitDateForm")
 }

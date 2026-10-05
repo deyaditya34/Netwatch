@@ -3,189 +3,643 @@
 
 <head>
     <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Net Limiter</title>
+
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-    <h1>Net Limiter</h1>
+    <header class="app-header">
+        <h1>Net Limiter</h1>
+        <p>Network usage monitor</p>
+    </header>
 
-    <button id="statusButton">Get Status</button>
-    <section id="status">
-        <h2>Status</h2>
 
-        <pre id="statusOutput"></pre>
-    </section>
-    <section id="usage">
-        <h2>Usage</h2>
+    <main class="app-main">
 
-        <div>
-            <label>
-                Days:
-                <input id="usageDays" type="number" min="1">
-            </label>
+        <section class="status-section">
 
-            <button id="usageDaysButton">
-                Get Usage by Days
-            </button>
-        </div>
-
-        <div>
-            <label>
-                From:
-                <input id="usageFrom" type="date">
-            </label>
-
-            <label>
-                To:
-                <input id="usageTo" type="date">
-            </label>
-
-            <button id="usageDateButton">
-                Get Usage by Date Range
-            </button>
-        </div>
-
-        <pre id="usageOutput"></pre>
-    </section>
-    <section id="interface">
-        <h2>Interface Usage</h2>
-
-        <div>
-            <label>
-                Days:
-                <input id="interfaceDays" type="number" min="1">
-            </label>
-
-            <button id="interfaceDaysButton">
-                Get Interface Usage by Days
-            </button>
-        </div>
-
-        <div>
-            <label>
-                From:
-                <input id="interfaceFrom" type="date">
-            </label>
-
-            <label>
-                To:
-                <input id="interfaceTo" type="date">
-            </label>
-
-            <button id="interfaceDateButton">
-                Get Interface Usage by Date Range
-            </button>
-        </div>
-
-        <pre id="interfaceOutput"></pre>
-    </section>
-    <section id="speed">
-        <h2>Speed</h2>
-
-        <button id="speedButton">
-            Get Speed
-        </button>
-
-        <button id="speedWatchButton">
-            Watch Speed
-        </button>
-
-        <button id="speedStopButton">
-            Stop Watch
-        </button>
-
-        <pre id="speedOutput"></pre>
-    </section>
-
-    <section id="session">
-        <h2>Session</h2>
-
-        <button id="sessionButton">
-            Get Session
-        </button>
-
-        <pre id="sessionOutput"></pre>
-    </section>
-
-    <section id="notification">
-        <h2>Notification</h2>
-
-        <div>
-            <button id="notificationEnableButton">
-                Enable
+            <button id="statusButton">
+                Get Status
             </button>
 
-            <button id="notificationDisableButton">
-                Disable
+            <div class="section-header">
+                <h2>Status</h2>
+                <p id="todayDate">Today</p>
+            </div>
+
+
+            <div class="status-grid">
+
+                <div class="status-card">
+                    <h3>Download</h3>
+                    <p id="todayDownload">—</p>
+                </div>
+
+                <div class="status-card">
+                    <h3>Upload</h3>
+                    <p id="todayUpload">—</p>
+                </div>
+
+                <div class="status-card">
+                    <h3>Total</h3>
+                    <p id="todayTotal">—</p>
+                </div>
+
+            </div>
+
+
+            <div class="status-group">
+
+                <h3>Session</h3>
+
+                <div class="status-grid">
+
+                    <div class="status-card">
+                        <h3>Download</h3>
+                        <p id="statusSessionDownload">—</p>
+                    </div>
+
+                    <div class="status-card">
+                        <h3>Upload</h3>
+                        <p id="statusSessionUpload">—</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="status-group">
+
+                <h3>Notification</h3>
+                <div class="status-grid">
+                    <div class="status-card">
+                        <h3>Threshold</h3>
+                        <p id="statusNotificationThreshold">—</p>
+                    </div>
+
+                    <div class="status-card">
+                        <h3>Enabled</h3>
+                        <p id="statusNotificationEnabled">-</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <section class="usage-section">
+
+            <div class="section-header">
+                <h2>Usage</h2>
+                <p>Network usage for a selected period</p>
+            </div>
+
+
+            <div class="usage-controls">
+                <form id="usageDaysForm">
+                    <div class="form-group">
+
+                        <label for="usageDays">
+                            Number of days
+                        </label>
+
+                        <input id="usageDays" type="number" min="1" placeholder="30" required>
+
+                        <button id="usageDaysButton" type="submit">
+                            Get Usage
+                        </button>
+                </form>
+            </div>
+
+
+            <div class="form-divider">
+                or
+            </div>
+
+            <form id="usageDateForm">
+                <div class="form-group">
+
+                    <label for="usageFrom">
+                        From
+                    </label>
+
+                    <input id="usageFrom" type="date" required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="usageTo">
+                        To
+                    </label>
+
+                    <input id="usageTo" type="date" required>
+
+                </div>
+
+
+                <button id="usageDateButton">
+                    Get Usage
+                </button>
+            </form>
+            </div>
+
+
+            <div class="usage-result">
+
+                <div class="section-header">
+                    <h3>Result</h3>
+                </div>
+
+                <div class="usage-grid">
+
+                    <div class="usage-card">
+                        <h4>Total Download</h4>
+                        <p id="usageTotalDownload">—</p>
+                    </div>
+
+                    <div class="usage-card">
+                        <h4>Total Upload</h4>
+                        <p id="usageTotalUpload">—</p>
+                    </div>
+
+                    <div class="usage-card">
+                        <h4>Total Usage</h4>
+                        <p id="usageTotal">—</p>
+                    </div>
+
+                </div>
+
+
+                <div class="usage-group">
+
+                    <h3>Wi-Fi</h3>
+
+                    <div class="usage-grid">
+
+                        <div class="usage-card">
+                            <h4>Download</h4>
+                            <p id="wifiDownload">—</p>
+                        </div>
+
+                        <div class="usage-card">
+                            <h4>Upload</h4>
+                            <p id="wifiUpload">—</p>
+                        </div>
+
+                        <div class="usage-card">
+                            <h4>Total</h4>
+                            <p id="wifiUsage">—</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="usage-group">
+
+                    <h3>Ethernet</h3>
+
+                    <div class="usage-grid">
+
+                        <div class="usage-card">
+                            <h4>Download</h4>
+                            <p id="ethernetDownload">—</p>
+                        </div>
+
+                        <div class="usage-card">
+                            <h4>Upload</h4>
+                            <p id="ethernetUpload">—</p>
+                        </div>
+
+                        <div class="usage-card">
+                            <h4>Total</h4>
+                            <p id="ethernetUsage">—</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+        <section class="interface-section">
+
+            <div class="section-header">
+                <h2>Interface</h2>
+                <p>Network usage by connection type</p>
+            </div>
+
+
+            <div class="interface-controls">
+                <form id="interfaceDaysForm">
+                    <div class="form-group">
+
+                        <label for="interfaceDays">
+                            Number of days
+                        </label>
+
+                        <input id="interfaceDays" type="number" min="1" placeholder="30" required>
+
+                        <button id="interfaceDaysButton" type="submit">
+                            Get Interface
+                        </button>
+                </form>
+
+            </div>
+
+
+            <div class="form-divider">
+                or
+            </div>
+
+            <form id="interfaceDateForm">
+                <div class="form-group">
+
+                    <label for="interfaceFrom">
+                        From
+                    </label>
+
+                    <input id="interfaceFrom" type="date" required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="interfaceTo">
+                        To
+                    </label>
+
+                    <input id="interfaceTo" type="date" required>
+
+                </div>
+
+
+                <button id="interfaceDateButton" type="submit">
+                    Get Interface
+                </button>
+            </form>
+            </div>
+
+
+            <div class="interface-result">
+
+                <div class="section-header">
+                    <!--<h3>Result</h3> -->
+                </div>
+
+
+                <div class="interface-grid">
+
+                    <!-- Wi-Fi -->
+
+                    <div class="interface-card">
+
+                        <h3>Wi-Fi</h3>
+
+                        <div class="interface-metric">
+                            <span>Download</span>
+                            <strong id="interfaceWifiDownload">—</strong>
+                        </div>
+
+                        <div class="interface-metric">
+                            <span>Upload</span>
+                            <strong id="interfaceWifiUpload">—</strong>
+                        </div>
+
+                        <div class="interface-metric">
+                            <span>Total</span>
+                            <strong id="interfaceWifiUsage">—</strong>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Ethernet -->
+
+                    <div class="interface-card">
+
+                        <h3>Ethernet</h3>
+
+                        <div class="interface-metric">
+                            <span>Download</span>
+                            <strong id="interfaceEthernetDownload">—</strong>
+                        </div>
+
+                        <div class="interface-metric">
+                            <span>Upload</span>
+                            <strong id="interfaceEthernetUpload">—</strong>
+                        </div>
+
+                        <div class="interface-metric">
+                            <span>Total</span>
+                            <strong id="interfaceEthernetUsage">—</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+        <section class="speed-section">
+
+            <div class="section-header">
+                <h2>Speed</h2>
+                <p>Current network transfer speed</p>
+            </div>
+
+            <div class="speed-controls">
+
+                <button id="speedButton">
+                    Get Speed
+                </button>
+
+                <button id="speedWatchButton">
+                    Start Watch Speed
+                </button>
+
+                <button id="speedStopButton">
+                    Stop Watch Speed
+                </button>
+
+            </div>
+
+            <div class="speed-grid">
+
+                <div class="speed-card">
+
+                    <div class="speed-interface">
+                        <span>Wifi</span>
+                        <strong id="speedWifiInterface">—</strong>
+                    </div>
+
+                    <div class="speed-metric">
+                        <span>Download</span>
+                        <strong id="speedWifiDownload">—</strong>
+                    </div>
+
+                    <div class="speed-metric">
+                        <span>Upload</span>
+                        <strong id="speedWifiUpload">—</strong>
+                    </div>
+
+                </div>
+
+                <div class="speed-card">
+
+                    <div class="speed-interface">
+                        <span>Ethernet</span>
+                        <strong id="speedEthernetInterface">—</strong>
+                    </div>
+
+                    <div class="speed-metric">
+                        <span>Download</span>
+                        <strong id="speedEthernetDownload">—</strong>
+                    </div>
+
+                    <div class="speed-metric">
+                        <span>Upload</span>
+                        <strong id="speedEthernetUpload">—</strong>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section class="session-section">
+
+            <div class="section-header">
+                <h2>Session</h2>
+                <p>Network usage since the monitor started</p>
+            </div>
+
+            <button id="sessionButton">
+                Get Session
             </button>
-        </div>
 
-        <div>
-            <label>
-                Threshold (GB):
-                <input id="notificationThreshold" type="number" min="0" step="0.01">
-            </label>
+            <div class="session-card">
 
-            <button id="notificationThresholdButton">
-                Set Threshold
-            </button>
-        </div>
+                <div class="session-metric">
+                    <span>Started</span>
+                    <strong id="sessionStartDate">—</strong>
+                </div>
 
-        <pre id="notificationOutput"></pre>
-    </section>
+                <div class="session-metric">
+                    <span>Download</span>
+                    <strong id="sessionDownload">—</strong>
+                </div>
 
-    <section id="limit">
-        <h2>Limit</h2>
+                <div class="session-metric">
+                    <span>Upload</span>
+                    <strong id="sessionUpload">—</strong>
+                </div>
 
-        <button id="limitGetButton">
-            Get Limit
-        </button>
+            </div>
 
-        <h3>Set Limit by Days</h3>
+        </section>
 
-        <div>
-            <label>
-                Days:
-                <input id="limitDays" type="number" min="1">
-            </label>
+        <section class="notification-section">
 
-            <label>
-                Amount (GB):
-                <input id="limitDaysAmount" type="number" min="0" step="0.01">
-            </label>
+            <div class="section-header">
+                <h2>Notification</h2>
+                <p>Configure usage notifications</p>
+            </div>
 
-            <button id="limitDaysButton">
-                Set Limit
-            </button>
-        </div>
 
-        <h3>Set Limit by Date</h3>
+            <div class="notification-card">
 
-        <div>
-            <label>
-                From:
-                <input id="limitFrom" type="date">
-            </label>
+                <div class="notification-setting">
 
-            <label>
-                To:
-                <input id="limitTo" type="date">
-            </label>
+                    <div>
+                        <h3>Notifications</h3>
+                        <p>Enable or disable usage notifications</p>
+                    </div>
 
-            <label>
-                Amount (GB):
-                <input id="limitDateAmount" type="number" min="0" step="0.01">
-            </label>
+                    <button id="notificationToggleButton" type="button">
+                        Disable
+                    </button>
 
-            <button id="limitDateButton">
-                Set Limit
-            </button>
-        </div>
+                </div>
 
-        <pre id="limitOutput"></pre>
-    </section>
-    <script type="module" src="./js/app.js"></script>
+
+                <div class="notification-setting">
+
+                    <div>
+                        <h3>Threshold</h3>
+                        <p>Notify when usage reaches this amount</p>
+                    </div>
+                    <form id="notificationThresholdForm">
+                        <div class="notification-threshold">
+
+                            <input id="notificationThreshold" type="number" min="0" step="0.1" placeholder="1" required>
+
+                            <span>GB</span>
+
+                            <button id="notificationThresholdButton" type="submit">
+                                Set
+                            </button>
+                    </form>
+                </div>
+
+            </div>
+
+            </div>
+
+        </section>
+
+        <section class="limit-section">
+
+            <div class="section-header">
+                <h2>Limit</h2>
+                <p>Set and view your network usage limit</p>
+            </div>
+
+
+            <!-- Current Limit -->
+
+            <div class="limit-current">
+
+                <h3>Current Limit</h3>
+
+                <div class="limit-card">
+
+                    <div class="limit-metric">
+                        <span>Start Date</span>
+                        <strong id="limitStartDate">—</strong>
+                    </div>
+
+                    <div class="limit-metric">
+                        <span>End Date</span>
+                        <strong id="limitEndDate">—</strong>
+                    </div>
+
+                    <div class="limit-metric">
+                        <span>Limit</span>
+                        <strong id="limitAmount">—</strong>
+                    </div>
+
+                    <div class="limit-metric">
+                        <span>Used</span>
+                        <strong id="limitUsed">—</strong>
+                    </div>
+
+                    <div class="limit-metric">
+                        <span>Remaining</span>
+                        <strong id="limitRemaining">—</strong>
+                    </div>
+
+                    <div class="limit-metric">
+                        <span>Percentage</span>
+                        <strong id="limitPercentage">—</strong>
+                    </div>
+
+                </div>
+
+                <button id="limitGetButton">
+                    Refresh Limit
+                </button>
+
+            </div>
+
+
+            <!-- Set Limit -->
+
+            <div class="limit-set">
+
+                <h3>Set Limit</h3>
+                <form id="limitDaysForm">
+                    <div class="limit-controls">
+
+                        <div class="form-group">
+
+                            <label for="limitDays">
+                                Number of days
+                            </label>
+
+                            <input id="limitDays" type="number" min="1" placeholder="30" required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="limitAmount">
+                                Amount (GB)
+                            </label>
+
+                            <input id="limitDaysAmount" type="number" min="0" step="0.01" placeholder="50" required>
+
+                        </div>
+
+                        <button id="limitDaysButton" type="submit">
+                            Set Limit
+                        </button>
+
+                    </div>
+                </form>
+
+                <div class="form-divider">
+                    or
+                </div>
+
+                <form id="limitDateForm">
+                    <div class="limit-controls">
+
+                        <div class="form-group">
+
+                            <label for="limitFrom">
+                                From
+                            </label>
+
+                            <input id="limitFrom" type="date" required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="limitTo">
+                                To
+                            </label>
+
+                            <input id="limitTo" type="date" required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="limitDateAmount">
+                                Amount (GB)
+                            </label>
+
+                            <input id="limitDateAmount" type="number" min="0" step="0.01" placeholder="50" required>
+
+                        </div>
+
+                        <button id="limitDateButton" type="submit">
+                            Set Limit
+                        </button>
+                </form>
+            </div>
+
+            </div>
+
+        </section>
+    </main>
+
+
+    <script type="module" src="js/app.js"></script>
 
 </body>
 

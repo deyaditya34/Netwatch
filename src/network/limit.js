@@ -4,7 +4,6 @@ import { ONE_GB } from "../config/constants.js";
 
 export async function getLimit() {
 	const usage = await getUsageBetweenDates(STATE.limitStartDate, STATE.limitEndDate);
-	const limit = STATE.limit;
 
 	const limitInGB = STATE.limit / ONE_GB;
 	const usedGb = usage.totalUsage / ONE_GB;
@@ -24,8 +23,11 @@ export async function getLimit() {
 export function setLimit(startDate, endDate, limit) {
 	STATE.limitStartDate = startDate;
 	STATE.limitEndDate = endDate;
-	STATE.limit = limit * ONE_GB;
 
+	if (limit) {
+		STATE.limit = limit * ONE_GB;
+	}
+	
 	return {
 		limit,
 		startDate: STATE.limitStartDate,
