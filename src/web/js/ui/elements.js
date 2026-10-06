@@ -65,6 +65,10 @@ export const elements = {
     notificationThreshold: document.getElementById("notificationThreshold"),
     notificationThresholdButton: document.getElementById("notificationThresholdButton"),
     notificationThresholdForm: document.getElementById("notificationThresholdForm"),
+    notificationBell: document.getElementById("notificationBell"),
+    notificationCount: document.getElementById("notificationCount"),
+    notificationPanel: document.getElementById("notificationPanel"),
+    notificationList: document.getElementById("notificationList"),
 
     // Limit
     limitGetButton: document.getElementById("limitGetButton"),

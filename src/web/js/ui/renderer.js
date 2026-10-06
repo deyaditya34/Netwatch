@@ -1,9 +1,14 @@
+import { notify } from "../../notifications/notification.js";
 import { elements } from "./elements.js";
 import { getCurrentRequest } from "./state.js";
 
 export function renderResponse(response) {
     const request = getCurrentRequest();
     const data = response.data;
+
+    if (!data) {
+        alert(`Error - ${response.error.message}`)
+    }
 
     switch (request.command) {
         case "status":
@@ -65,6 +70,10 @@ export function renderResponse(response) {
             elements.notificationToggleButton.value = data.enabled ? "enable" : "disable";
             elements.notificationToggleButton.textContent = data.enabled ? "Enable" : "Disable";
             elements.notificationThreshold.textContent = data.threshold;
+
+            if (request.options.threshold !== undefined) {
+                notify(`Notification for the data usage is set at ${data.threshold}`);
+            }
             break;
 
         case "limit":
@@ -75,8 +84,8 @@ export function renderResponse(response) {
                 elements.limitUsed.textContent = data.usedGb;
                 elements.limitRemaining.textContent = data.remaining;
                 elements.limitPercentage.textContent = data.percentage;
-
-                
+            } else if (request.subCommand === "set") {
+                notify(`Usage Limit is set of ${data.limit}GB from ${data.startDate} to ${data.endDate}`)
             }
             elements.limitDaysAmount.value = "";
             elements.limitDateAmount.value = "";

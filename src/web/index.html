@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Net Limiter</title>
+    <title>Netwatch</title>
 
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -14,8 +14,35 @@
 <body>
 
     <header class="app-header">
-        <h1>Netwatch</h1>
-        <p>Network usage monitor</p>
+
+        <div class="app-header-content">
+
+            <div>
+                <h1>Netwatch</h1>
+                <p>Network usage monitor</p>
+            </div>
+
+            <div class="notification-container">
+
+                <button id="notificationBell" class="notification-bell" type="button" aria-label="Notifications">
+                    🔔
+                    <span id="notificationCount">0</span>
+                </button>
+
+                <div id="notificationPanel" class="notification-panel" hidden>
+                    <div class="notification-panel-header">
+                        <h3>Notifications</h3>
+                    </div>
+
+                    <div id="notificationList" class="notification-list">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </header>
 
 

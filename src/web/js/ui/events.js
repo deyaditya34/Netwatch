@@ -18,6 +18,13 @@ import {
 } from "../commands/requests.js";
 
 export function registerEvents() {
+    elements.notificationBell.addEventListener("click", () => {
+
+        elements.notificationPanel.hidden =
+            !elements.notificationPanel.hidden;
+
+    });
+
     elements.statusButton.addEventListener("click", () => {
         const request = createStatusRequest();
 

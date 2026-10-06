@@ -4,12 +4,13 @@ import { renderResponse } from "./ui/renderer.js";
 import { createStatusRequest } from "../js/commands/requests.js";
 import { setCurrentRequest } from "./ui/state.js";
 import { handleCommand } from "./commands/handler.js";
-
+import { setNotificationHandler, getNotifications, renderNotifications } from "../notifications/notification.js";
+import { elements } from "./ui/elements.js"
 
 registerEvents();
 
 setMessageHandler((message) => {
-    console.log("response -", message);
+    
     renderResponse(message);
 
 });
@@ -22,3 +23,10 @@ function loadInitialData() {
 
 loadInitialData();
 
+setNotificationHandler(() => {
+    const notifications = getNotifications();
+
+    elements.notificationCount.textContent = notifications.length;
+
+    renderNotifications(elements.notificationList)
+})

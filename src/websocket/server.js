@@ -60,6 +60,10 @@ wsServer.on("connection", (socket) => {
 	});
 
 	socket.on("close", () => {
+		if (watchInterval) {
+			clearInterval(watchInterval);
+			watchInterval = null;
+		}
 		console.log("web socket client disconnected");
 	});
 
